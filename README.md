@@ -8,6 +8,7 @@ The pipeline consists of the following stages:
 - Validate: Focuses on Terraform IaC validation tools and commands like terraform validate, terraform format, tfsec, tflint, and checkov.
 - Plan: Creates an execution plan to preview changes Terraform intends to make to your infrastructure.
 - Apply: Uses the plan to provision infrastructure in the test account.
+- Manual approval destroy: This is to ensure that the pipeline is stopped and awaits manual approval before executing the "destroy stage".
 - Destroy: Removes infrastructure created in the previous stage. Running these four stages ensures Terraform configuration integrity.
 
 ## Installation

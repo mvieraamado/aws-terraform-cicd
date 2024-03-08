@@ -56,4 +56,36 @@ resource "aws_codepipeline" "terraform_pipeline" {
     }
   }
 
+  stage {
+    name = "Manual-approval-destroy"
+
+    action {
+      name     = "Manual-Approval-Destroy"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
+      run_order = length(var.stages) + 1
+    }
+  }
+
+
+  stage {
+    name = "Stage-destroy"
+
+    action {
+      category         = "Build"
+      name             = "Action-destroy"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["ApplyOutput"]
+      output_artifacts = ["DestroyOutput"]
+      version          = "1"
+      run_order        = 2
+
+      configuration = {
+        ProjectName = "${var.project_name}-destroy"  
+      }
+    }
+  }
 }
